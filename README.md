@@ -11,3 +11,6 @@ Génie logiciel et data
 1. on propose 20 services
 2. requettes complexe: des jointure multiple et tripe , group by, destinct, avg, max, la moyenne avec une somme. 
 3. pour voir les résultas, je vous prie de bien voir sur le fichier notebook : https://github.com/Koussailakadi/Emmission_co2_voiture/blob/master/CO2_Emmissions.ipynb
+
+# Base de données brute: 
+
