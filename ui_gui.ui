@@ -183,7 +183,7 @@ background-color: rgb(84, 84, 126);
        <string notr="true"/>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="Database_config">
        <layout class="QVBoxLayout" name="verticalLayout">

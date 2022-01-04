@@ -6,6 +6,7 @@ Author: koussaila KADI
 """
 import sys
 import os
+import pandas as pd
 
 
 from PySide2 import QtCore
@@ -152,6 +153,7 @@ class MainWindow(QMainWindow):
         self.marque=self.ui.comb_marque.currentText()
 
         df_modele_com=self.database.getMarque('Modele_com',condition=self.marque)
+
         for i in range(df_modele_com.shape[0]):
             self.ui.comb_modele_com.addItem("")
             self.ui.comb_modele_com.setItemText(i, QCoreApplication.translate('MainWindow', u""+df_modele_com.loc[i,'Modele_com'], None))
@@ -177,11 +179,9 @@ class MainWindow(QMainWindow):
         self.setTable(data_voiture)
 
     def getDataSearch(self):
-        print(self.marque)
-        print(self.modele_com)
-        print(self.designation_com)
+        data=pd.DataFrame.from_dict({"ID":[1,2,3,4,5],"Marque":['AUDI','FERARI','RENAULT','BMW','ATOS']})
         self.df_marque=self.database.getDataFrameMaque("Marque",self.marque,self.modele_com, self.designation_com)
-        self.setTable(self.df_marque)
+        self.setTable(data)
 
 
     def setup(self):
@@ -198,24 +198,26 @@ class MainWindow(QMainWindow):
 
     
     def setTable(self,data):
-        self.ui.tableWidget.setRowCount(data.shape[0])
-        self.ui.tableWidget.setColumnCount(data.shape[1])
-        print(data)
+        self.ui.tableWidget.setRowCount(0)
+        self.ui.tableWidget.setColumnCount(0)
+
         horizontal_items={}
-        for column in data.columns.to_list():
-            print(column)
-            horizontal_items["hor_items"+str(column)]=QTableWidgetItem()
-            self.ui.tableWidget.setHorizontalHeaderItem(column, horizontal_items["hor_items"+str(column)])
-            
-            #set items:
-            horizontal_items["hor_items"+str(column)] = self.ui.tableWidget.horizontalHeaderItem(column)
-            horizontal_items["hor_items"+str(column)].setText(QCoreApplication.translate("MainWindow", u""+str(column), None))
-            """item=QTableWidgetItem()
-            self.ui.tableWidget.setHorizontalHeaderItem(item,column)
+        items_data={}
+
+        '''for column in data.columns.to_list():
+            horizontal_items[str(column)]=QTableWidgetItem()
+            self.ui.tableWidget.setHorizontalHeaderItem(column,horizontal_items[column])
         
             #set items:
-            items = self.ui.tableWidget.horizontalHeaderItem(column)
-            items.setText(QCoreApplication.translate("MainWindow", u""+column, None))"""
+            items_horiz = self.ui.tableWidget.horizontalHeaderItem(column)
+            items_horiz.setText(QCoreApplication.translate("MainWindow", u""+column, None))'''
+
+        for row, data in enumerate(data.values.tolist()):
+            self.ui.tableWidget.insertRow(row)
+            for column, d in enumerate(data):
+                print(row, column, d)
+                #création des items:
+                self.ui.tableWidget.setItem(row, column, QTableWidgetItem(str(d)))
 
 
 
